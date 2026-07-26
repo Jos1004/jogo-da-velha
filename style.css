@@ -27,7 +27,7 @@ body{
   display: grid;
   grid-template-columns: repeat(3, 153px);
   grid-template-rows: repeat(3, 153px);
-  border: 1px solid red;
+ /*  border: 1px solid red; */
   gap: 7px;
 }
 
@@ -37,5 +37,20 @@ body{
   height: 93%;
   border-radius:15px;
   box-shadow: 0 10px 0 0 #10212A;
+  cursor: pointer;
+}
+
+.resetar{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 2em;
+  right: 8.5em;
+  background: silver;
+  border-radius: 10px;
+  background-image: url(images/Redo.svg);
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position: center;
   cursor: pointer;
 }
