@@ -1,0 +1,41 @@
+html, body{
+   margin: 0;
+   height: 100%;
+}
+
+body{
+  background-color: #1A2A33;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.container{
+  height: 623px;
+  width: 470px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  border: 2px solid blue;
+}
+
+.container1{
+  height: 471px;
+  width: 470px;
+  display: grid;
+  grid-template-columns: repeat(3, 153px);
+  grid-template-rows: repeat(3, 153px);
+  border: 1px solid red;
+  gap: 7px;
+}
+
+.box{
+  background-color: #1F3641;
+  width: 93%;
+  height: 93%;
+  border-radius:15px;
+  box-shadow: 0 10px 0 0 #10212A;
+  cursor: pointer;
+}
