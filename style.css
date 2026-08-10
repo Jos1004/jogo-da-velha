@@ -18,7 +18,7 @@ body{
   justify-content: center;
   align-items: center;
   align-content: center;
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
 }
 
 .container1{
@@ -44,8 +44,7 @@ body{
   width: 40px;
   height: 40px;
   position: absolute;
-  top: 2em;
-  right: 8.5em;
+  translate: 195px -270px;
   background: silver;
   border-radius: 10px;
   background-image: url(images/Redo.svg);
