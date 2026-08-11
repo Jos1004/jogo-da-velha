@@ -1,37 +1,54 @@
+let jogador = 1
+let jogo = [
+    ["","",""],
+    ["","",""],
+    ["","",""]
+]
+
+let jogo1 = [
+    ["","",""],
+    ["","",""],
+    ["","",""]
+]
+ 
+
 function reset(){
     for(let n = 1; n < 10; n++){
        let idn = document.getElementById(`i${n}`)
        idn.style.backgroundColor = "rgb(31, 54, 65)"
+       let jogo = [
+        ["","",""],
+        ["","",""],
+        ["","",""]
+      ]
+
+       let jogo1 = [
+       ["","",""],
+       ["","",""],
+       ["","",""]
+      ]
     }
 }
 reset()
 
-let jogador = 1
-
 for(let n = 1; n < 10; n++){
     let idn = document.getElementById(`i${n}`)
        idn.onclick = function cor(){
+           let linha = Math.floor((n - 1) / 3)
+           let coluna = (n - 1) % 3
+           
            if(idn.style.backgroundColor == "rgb(31, 54, 65)"){
              
             if(jogador % 2 == 0){
               idn.style.backgroundColor = 'purple'
+              jogo1[linha][coluna] = "O"
+              console.log(jogo1)
             }else{
-              idn.style.backgroundColor = 'teal'  
+              idn.style.backgroundColor = 'teal' 
+              jogo[linha][coluna] = "X"
+              console.log(jogo)
             }
                jogador ++
-
-            let jogo = [
-                ["","",""],
-                ["","",""],
-                ["","",""]
-            ]
-
-            let linha = Math.floor((n - 1) / 3)
-            let coluna = (n - 1 % 3)
-
-           jogo[linha][coluna] = "X"
-
-           console.log(jogo)
 
             if(
                 jogo[0][0] == "X" &&
@@ -45,29 +62,61 @@ for(let n = 1; n < 10; n++){
                 jogo[2][0] == "X" &&
                 jogo[2][1] == "X" &&
                 jogo[2][2] == "X"
+                ||
+                jogo[0][0] == "X" &&
+                jogo[1][1] == "X" &&
+                jogo[2][2] == "X"
+                ||
+                jogo[0][2] == "X" &&
+                jogo[1][1] == "X" &&
+                jogo[2][0] == "X"
+                ||
+                jogo[0][0] == "X" &&
+                jogo[1][0] == "X" &&
+                jogo[2][0] == "X"
+                ||
+                jogo[0][1] == "X" &&
+                jogo[1][1] == "X" &&
+                jogo[2][1] == "X"
+                ||
+                jogo[0][2] == "X" &&
+                jogo[1][2] == "X" &&
+                jogo[2][2] == "X"
+                ||
+                jogo1[0][0] == "O" &&
+                jogo1[0][1] == "O" &&
+                jogo1[0][2] == "O"
+                ||
+                jogo1[1][0] == "O" &&
+                jogo1[1][1] == "O" &&
+                jogo1[1][2] == "O"
+                ||
+                jogo1[2][0] == "O" &&
+                jogo1[2][1] == "O" &&
+                jogo1[2][2] == "O"
+                ||
+                jogo1[0][0] == "O" &&
+                jogo1[1][1] == "O" &&
+                jogo1[2][2] == "O"
+                ||
+                jogo1[0][2] == "O" &&
+                jogo1[1][1] == "O" &&
+                jogo1[2][0] == "O"
+                ||
+                jogo1[0][0] == "O" &&
+                jogo1[1][0] == "O" &&
+                jogo1[2][0] == "O"
+                ||
+                jogo1[0][1] == "O" &&
+                jogo1[1][1] == "O" &&
+                jogo1[2][1] == "O"
+                ||
+                jogo1[0][2] == "O" &&
+                jogo1[1][2] == "O" &&
+                jogo1[2][2] == "O"
             ){
                 alert('You Win')
             }
        }       
     } 
 }     
-
-
-
-
-/* ||
-jogo[0][0] == i1 &&
-jogo[1][0] == i4 &&
-jogo[2][0] == i7
-||
-jogo[0][1] == 'X' &&
-jogo[1][1] == 'X' &&
-jogo[2][1] == 'X'
-||
-jogo[0][2] == 'X' &&
-jogo[1][2] == 'X' &&
-jogo[2][2] == 'X'
-||
-jogo[0][2] == 'X' &&
-jogo[1][1] == 'X' &&
-jogo[2][0] == 'X' */
