@@ -25,13 +25,17 @@ for (let n = 1; n < 10; n++) {
     let linha = Math.floor((n - 1) / 3);
     let coluna = (n - 1) % 3;
 
-    if (idn.style.backgroundColor == 'rgb(31, 54, 65)') {
+    if (idn.style.backgroundImage == "url('')") {
       if (jogador % 2 == 0) {
-        idn.style.backgroundColor = 'purple';
+        idn.style.backgroundImage = "url('images/o.svg')";
+        idn.style.backgroundRepeat = 'no-repeat';
+        idn.style.backgroundPosition = 'center';
         jogo1[linha][coluna] = 'O';
         console.log(jogo1);
       } else {
-        idn.style.backgroundColor = 'teal';
+        idn.style.backgroundImage = "url('images/x.svg')";
+        idn.style.backgroundRepeat = 'no-repeat';
+        idn.style.backgroundPosition = 'center';
         jogo[linha][coluna] = 'X';
         console.log(jogo);
       }
@@ -55,7 +59,9 @@ for (let n = 1; n < 10; n++) {
         (jogo1[0][1] == 'O' && jogo1[1][1] == 'O' && jogo1[2][1] == 'O') ||
         (jogo1[0][2] == 'O' && jogo1[1][2] == 'O' && jogo1[2][2] == 'O')
       ) {
-        alert('You Win');
+        setTimeout(() => {
+          alert('you win');
+        }, 1e3);
       }
     }
   };
