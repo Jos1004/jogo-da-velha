@@ -1,46 +1,48 @@
-html, body{
-   margin: 0;
-   height: 100%;
+html,
+body {
+  margin: 0;
+  height: 100%;
 }
 
-body{
-  background-color: #1A2A33;
+body {
+  background-color: #1a2a33;
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
 }
 
-.container{
+.container {
   height: 623px;
   width: 470px;
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
+  /*rgb(31, 54, 65)*/
   /* border: 2px solid blue; */
 }
 
-.container1{
+.container1 {
   height: 471px;
   width: 470px;
   display: grid;
   grid-template-columns: repeat(3, 153px);
   grid-template-rows: repeat(3, 153px);
- /*  border: 1px solid red; */
+  /*  border: 1px solid red; */
   gap: 7px;
 }
 
-.box{
-  background-color: #1F3641;
+.box {
+  background-color: #1f3641;
   width: 93%;
   height: 93%;
-  border-radius:15px;
-  box-shadow: 0 10px 0 0 #10212A;
+  border-radius: 15px;
+  box-shadow: 0 10px 0 0 #10212a;
   cursor: pointer;
 }
 
-.resetar{
+.resetar {
   width: 40px;
   height: 40px;
   position: absolute;

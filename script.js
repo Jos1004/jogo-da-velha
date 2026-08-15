@@ -14,7 +14,15 @@ let jogo1 = [
 function reset() {
   for (let n = 1; n < 10; n++) {
     let idn = document.getElementById(`i${n}`);
-    idn.style.backgroundColor = 'rgb(31, 54, 65)';
+    idn.style.backgroundImage = '';
+    idn.style.backgroundRepeat = '';
+    idn.style.backgroundPosition = '';
+  }
+  for (let linha = 0; linha < 3; linha++) {
+    for (let coluna = 0; coluna < 3; coluna++) {
+      jogo[linha][coluna] = '';
+      jogo1[linha][coluna] = '';
+    }
   }
 }
 reset();
@@ -25,7 +33,7 @@ for (let n = 1; n < 10; n++) {
     let linha = Math.floor((n - 1) / 3);
     let coluna = (n - 1) % 3;
 
-    if (idn.style.backgroundImage == "url('')") {
+    if (idn.style.backgroundImage == '') {
       if (jogador % 2 == 0) {
         idn.style.backgroundImage = "url('images/o.svg')";
         idn.style.backgroundRepeat = 'no-repeat';
@@ -61,7 +69,8 @@ for (let n = 1; n < 10; n++) {
       ) {
         setTimeout(() => {
           alert('you win');
-        }, 1e3);
+        }, 500);
+        reset();
       }
     }
   };
