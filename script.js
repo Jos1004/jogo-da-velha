@@ -80,4 +80,19 @@ const socket = new WebSocket('ws://localhost:8080');
 
 socket.onopen = function () {
   console.log('Conectado ao servidor!');
+
+  const jogada = {
+    jogador: 'X',
+    posicao: 5,
+  };
+
+  socket.send(JSON.stringify(jogada));
+};
+
+socket.onmessage = function (event) {
+  const jogadaRecebida = JSON.parse(event.data);
+
+  console.log(jogadaRecebida);
+  console.log(jogadaRecebida.jogador);
+  console.log(jogadaRecebida.posicao);
 };
