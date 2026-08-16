@@ -75,3 +75,9 @@ for (let n = 1; n < 10; n++) {
     }
   };
 }
+
+const socket = new WebSocket('ws://localhost:8080');
+
+socket.onopen = function () {
+  console.log('Conectado ao servidor!');
+};
