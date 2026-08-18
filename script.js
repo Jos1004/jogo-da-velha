@@ -1,98 +1,256 @@
-let jogador = 1;
+let meuJogador = '';
+
 let jogo = [
   ['', '', ''],
   ['', '', ''],
   ['', '', ''],
 ];
 
-let jogo1 = [
-  ['', '', ''],
-  ['', '', ''],
-  ['', '', ''],
-];
+const socket = new WebSocket('ws://localhost:8080');
 
-function reset() {
-  for (let n = 1; n < 10; n++) {
-    let idn = document.getElementById(`i${n}`);
-    idn.style.backgroundImage = '';
-    idn.style.backgroundRepeat = '';
-    idn.style.backgroundPosition = '';
+// ======================================
+// RESET LOCAL
+// ======================================
+
+function resetTabuleiro() {
+  // Limpa as 9 casas visualmente
+  for (let n = 1; n <= 9; n++) {
+    const casa = document.getElementById(`i${n}`);
+
+    if (casa) {
+      casa.style.backgroundImage = '';
+      casa.style.backgroundRepeat = '';
+      casa.style.backgroundPosition = '';
+    }
   }
+
+  // Limpa a matriz
   for (let linha = 0; linha < 3; linha++) {
     for (let coluna = 0; coluna < 3; coluna++) {
       jogo[linha][coluna] = '';
-      jogo1[linha][coluna] = '';
     }
   }
-}
-reset();
 
-for (let n = 1; n < 10; n++) {
-  let idn = document.getElementById(`i${n}`);
-  idn.onclick = function cor() {
-    let linha = Math.floor((n - 1) / 3);
-    let coluna = (n - 1) % 3;
-
-    if (idn.style.backgroundImage == '') {
-      if (jogador % 2 == 0) {
-        idn.style.backgroundImage = "url('images/o.svg')";
-        idn.style.backgroundRepeat = 'no-repeat';
-        idn.style.backgroundPosition = 'center';
-        jogo1[linha][coluna] = 'O';
-        console.log(jogo1);
-      } else {
-        idn.style.backgroundImage = "url('images/x.svg')";
-        idn.style.backgroundRepeat = 'no-repeat';
-        idn.style.backgroundPosition = 'center';
-        jogo[linha][coluna] = 'X';
-        console.log(jogo);
-      }
-      jogador++;
-
-      if (
-        (jogo[0][0] == 'X' && jogo[0][1] == 'X' && jogo[0][2] == 'X') ||
-        (jogo[1][0] == 'X' && jogo[1][1] == 'X' && jogo[1][2] == 'X') ||
-        (jogo[2][0] == 'X' && jogo[2][1] == 'X' && jogo[2][2] == 'X') ||
-        (jogo[0][0] == 'X' && jogo[1][1] == 'X' && jogo[2][2] == 'X') ||
-        (jogo[0][2] == 'X' && jogo[1][1] == 'X' && jogo[2][0] == 'X') ||
-        (jogo[0][0] == 'X' && jogo[1][0] == 'X' && jogo[2][0] == 'X') ||
-        (jogo[0][1] == 'X' && jogo[1][1] == 'X' && jogo[2][1] == 'X') ||
-        (jogo[0][2] == 'X' && jogo[1][2] == 'X' && jogo[2][2] == 'X') ||
-        (jogo1[0][0] == 'O' && jogo1[0][1] == 'O' && jogo1[0][2] == 'O') ||
-        (jogo1[1][0] == 'O' && jogo1[1][1] == 'O' && jogo1[1][2] == 'O') ||
-        (jogo1[2][0] == 'O' && jogo1[2][1] == 'O' && jogo1[2][2] == 'O') ||
-        (jogo1[0][0] == 'O' && jogo1[1][1] == 'O' && jogo1[2][2] == 'O') ||
-        (jogo1[0][2] == 'O' && jogo1[1][1] == 'O' && jogo1[2][0] == 'O') ||
-        (jogo1[0][0] == 'O' && jogo1[1][0] == 'O' && jogo1[2][0] == 'O') ||
-        (jogo1[0][1] == 'O' && jogo1[1][1] == 'O' && jogo1[2][1] == 'O') ||
-        (jogo1[0][2] == 'O' && jogo1[1][2] == 'O' && jogo1[2][2] == 'O')
-      ) {
-        setTimeout(() => {
-          alert('you win');
-        }, 500);
-        reset();
-      }
-    }
-  };
+  console.log('Tabuleiro resetado!');
 }
 
-const socket = new WebSocket('ws://localhost:8080');
+// ======================================
+// WEBSOCKET
+// ======================================
 
 socket.onopen = function () {
   console.log('Conectado ao servidor!');
-
-  const jogada = {
-    jogador: 'X',
-    posicao: 5,
-  };
-
-  socket.send(JSON.stringify(jogada));
 };
 
-socket.onmessage = function (event) {
-  const jogadaRecebida = JSON.parse(event.data);
+socket.onclose = function () {
+  console.log('WebSocket fechado');
+};
 
-  console.log(jogadaRecebida);
-  console.log(jogadaRecebida.jogador);
-  console.log(jogadaRecebida.posicao);
+socket.onerror = function (erro) {
+  console.log('Erro no WebSocket:', erro);
+};
+
+// ======================================
+// VERIFICAR VITÓRIA
+// ======================================
+
+function verificarVitoria() {
+  const combinacoes = [
+    // Linhas
+    [jogo[0][0], jogo[0][1], jogo[0][2]],
+    [jogo[1][0], jogo[1][1], jogo[1][2]],
+    [jogo[2][0], jogo[2][1], jogo[2][2]],
+
+    // Colunas
+    [jogo[0][0], jogo[1][0], jogo[2][0]],
+    [jogo[0][1], jogo[1][1], jogo[2][1]],
+    [jogo[0][2], jogo[1][2], jogo[2][2]],
+
+    // Diagonais
+    [jogo[0][0], jogo[1][1], jogo[2][2]],
+    [jogo[0][2], jogo[1][1], jogo[2][0]],
+  ];
+
+  for (const combinacao of combinacoes) {
+    if (
+      combinacao[0] !== '' &&
+      combinacao[0] === combinacao[1] &&
+      combinacao[1] === combinacao[2]
+    ) {
+      return combinacao[0];
+    }
+  }
+
+  return null;
+}
+
+// ======================================
+// CLIQUE NAS CASAS
+// ======================================
+
+for (let n = 1; n <= 9; n++) {
+  const casa = document.getElementById(`i${n}`);
+
+  casa.onclick = function () {
+    // Ainda não recebeu X ou O
+    if (meuJogador === '') {
+      console.log('Aguardando jogador...');
+      return;
+    }
+
+    // WebSocket não conectado
+    if (socket.readyState !== WebSocket.OPEN) {
+      console.log('WebSocket não está conectado');
+      return;
+    }
+
+    // Casa já ocupada
+    if (casa.style.backgroundImage !== '') {
+      return;
+    }
+
+    // Descobre linha e coluna
+    const linha = Math.floor((n - 1) / 3);
+    const coluna = (n - 1) % 3;
+
+    // Envia a jogada para o servidor
+    const jogada = {
+      tipo: 'jogada',
+      jogador: meuJogador,
+      posicao: n,
+    };
+
+    socket.send(JSON.stringify(jogada));
+  };
+}
+
+// ======================================
+// RECEBER MENSAGENS DO SERVIDOR
+// ======================================
+
+socket.onmessage = function (event) {
+  const mensagem = JSON.parse(event.data);
+
+  console.log('Mensagem recebida:', mensagem);
+
+  // ====================================
+  // SERVIDOR INFORMOU MEU JOGADOR
+  // ====================================
+
+  if (mensagem.tipo === 'jogador') {
+    meuJogador = mensagem.jogador;
+
+    console.log('Meu jogador:', meuJogador);
+
+    return;
+  }
+
+  // ====================================
+  // RESET
+  // ====================================
+
+  if (mensagem.tipo === 'reset') {
+    console.log('Recebi comando de RESET');
+
+    resetTabuleiro();
+
+    return;
+  }
+
+  // ====================================
+  // MUDANÇA DE VEZ
+  // ====================================
+
+  if (mensagem.tipo === 'vez') {
+    console.log('Agora é a vez de:', mensagem.jogador);
+
+    return;
+  }
+
+  // ====================================
+  // JOGADA
+  // ====================================
+
+  if (mensagem.tipo === 'jogada') {
+    const jogador = mensagem.jogador;
+    const posicao = mensagem.posicao;
+
+    const casa = document.getElementById(`i${posicao}`);
+
+    if (!casa) {
+      console.log('Casa não encontrada:', posicao);
+      return;
+    }
+
+    const linha = Math.floor((posicao - 1) / 3);
+    const coluna = (posicao - 1) % 3;
+
+    // ==================================
+    // X
+    // ==================================
+
+    if (jogador === 'X') {
+      casa.style.backgroundImage = "url('images/x.svg')";
+      casa.style.backgroundRepeat = 'no-repeat';
+      casa.style.backgroundPosition = 'center';
+
+      jogo[linha][coluna] = 'X';
+    }
+
+    // ==================================
+    // O
+    // ==================================
+
+    if (jogador === 'O') {
+      casa.style.backgroundImage = "url('images/o.svg')";
+      casa.style.backgroundRepeat = 'no-repeat';
+      casa.style.backgroundPosition = 'center';
+
+      jogo[linha][coluna] = 'O';
+    }
+
+    console.log('Tabuleiro:', jogo);
+
+    // ==================================
+    // VERIFICA VITÓRIA
+    // ==================================
+
+    const vencedor = verificarVitoria();
+
+    if (vencedor) {
+      setTimeout(function () {
+        if (vencedor === meuJogador) {
+          alert('Você ganhou!');
+        } else {
+          alert('Você perdeu!');
+        }
+      }, 200);
+
+      // Depois da mensagem, manda reset para os dois
+      setTimeout(function () {
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.send(
+            JSON.stringify({
+              tipo: 'reset',
+            }),
+          );
+        }
+      }, 500);
+    }
+  }
+};
+
+const botaoReset = document.getElementById('reset');
+
+botaoReset.onclick = function () {
+  if (socket.readyState !== WebSocket.OPEN) {
+    console.log('WebSocket não conectado');
+    return;
+  }
+
+  socket.send(
+    JSON.stringify({
+      tipo: 'reset',
+    }),
+  );
 };

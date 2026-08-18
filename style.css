@@ -42,7 +42,7 @@ body {
   cursor: pointer;
 }
 
-.resetar {
+#reset {
   width: 40px;
   height: 40px;
   position: absolute;
