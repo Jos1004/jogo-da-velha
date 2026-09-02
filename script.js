@@ -6,7 +6,7 @@ let jogo = [
   ['', '', ''],
 ];
 // Altere de https:// para wss://
-const socket = new WebSocket('wss://://onrender.com');
+const socket = new WebSocket('wss://jogo-da-velha-hvm7.onrender.com');
 
 
 
