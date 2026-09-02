@@ -21,6 +21,7 @@ body {
   align-content: center;
   /*rgb(31, 54, 65)*/
   /* border: 2px solid blue; */
+  z-index: 1;
 }
 
 .container1 {
@@ -46,12 +47,32 @@ body {
   width: 40px;
   height: 40px;
   position: absolute;
-  translate: 195px -270px;
-  background: silver;
+  translate: 195px -280px;
+  background: #7c98b3;
   border-radius: 10px;
   background-image: url(images/Redo.svg);
   background-repeat: no-repeat;
   background-size: 20px;
   background-position: center;
   cursor: pointer;
+  border: none;
+}
+
+.modal-overlay {
+  z-index: 10;
+  position: absolute;
+  translate: -5px -280px;
+  height: 50px;
+  width: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #7c98b3;
+  color: black;
+  font-size: 15px;
+  font-family: 'Comic Neue', cursive;
+  font-weight: 400;
+  font-style: normal;
+  border-radius: 10px;
+  box-shadow: 0 5px 0 0 #10212a;
 }

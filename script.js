@@ -140,7 +140,7 @@ socket.onmessage = function (event) {
   if (mensagem.tipo === 'jogador') {
     meuJogador = mensagem.jogador;
 
-    console.log('Meu jogador:', meuJogador);
+    console.log('Meu jogador', meuJogador);
 
     return;
   }
@@ -163,7 +163,7 @@ socket.onmessage = function (event) {
 
   if (mensagem.tipo === 'vez') {
     console.log('Agora é a vez de:', mensagem.jogador);
-
+    resposta.innerHTML = 'vez do ' + mensagem.jogador;
     return;
   }
 
@@ -219,12 +219,15 @@ socket.onmessage = function (event) {
 
     if (vencedor) {
       setTimeout(function () {
+        let resposta = document.querySelector('#resposta');
+        let modal = document.querySelector('#modalOverlay');
+
         if (vencedor === meuJogador) {
-          alert('Você ganhou!');
+          resposta.innerText = 'Você ganhou';
         } else {
-          alert('Você perdeu!');
+          resposta.innerText = 'Você perdeu';
         }
-      }, 200);
+      }, 100);
 
       // Depois da mensagem, manda reset para os dois
       setTimeout(function () {
@@ -235,7 +238,7 @@ socket.onmessage = function (event) {
             }),
           );
         }
-      }, 500);
+      }, 8000);
     }
   }
 };
