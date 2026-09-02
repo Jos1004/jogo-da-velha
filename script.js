@@ -6,7 +6,7 @@ let jogo = [
   ['', '', ''],
 ];
 
-const socket = new WebSocket('https://jogo-da-velha-hvm7.onrender.com');
+const socket = new WebSocket('wss://jogo-da-velha-hvm7.onrender.com');
 
 // ======================================
 // RESET LOCAL
